@@ -1,0 +1,112 @@
+<style lang="less">
+ .bubble {
+     display: flex;
+     flex-wrap: nowrap;
+     flex-direction: row;
+     align-items: center;
+     justify-content: center;
+     position: fixed;
+     min-width: 200rpx;
+     min-height: 60rpx;
+     line-height: 1.2;
+     top: 30rpx;
+     left:50%;
+     font-size: 14px;
+     padding: 0 30rpx;
+     border-radius: 3px;
+     box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
+     z-index: 20;
+     border-top: 3px solid #EE831F;
+     transition: all .5s ease-in-out;
+     transform: translate(-50%, -200%);
+     white-space: nowrap;
+     word-wrap: normal;
+     word-break: keep-all
+ }
+ .tip-icon{
+     margin-left: 30rpx;
+ }
+ .bubble:after, .bubble:before {
+	bottom: 100%;
+	left: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.bubble:after {
+	border-color: rgba(136, 183, 213, 0);
+	border-bottom-color: #F668F4;
+	border-width: 10px;
+	margin-left: -10px;
+}
+.bubble:before {
+	border-color: rgba(194, 225, 245, 0);
+	border-bottom-color: #EE831F;
+	border-width: 14px;
+	margin-left: -14px;
+}
+
+.show {
+    transform: translate(-50%,0%);
+}
+</style>
+<template>
+  <view class="{{!flag ? 'bubble':'bubble show'}}" style="{{'color:' + color + ';' + 'background-color:' + backgroundColor + ';'}}">
+      <span>{{value}}</span><icon class="tip-icon" wx:if="{{iconType}}" type="{{iconType || 'success'}}" size="14"></icon>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+
+  export default class Buble extends wepy.component {
+    props = {
+        //字体颜色
+        color: {
+            type: String,
+            default: '#fff'
+        },
+        //背景颜色
+        backgroundColor: {
+            type: String,
+            default: '#F668F4'
+        },
+        //图标类型 跟微信官方
+        iconType: {
+            type: String,
+            default: ''
+        }
+    }
+
+    data = {
+        value:'',
+        flag: false
+    }
+
+    methods= {
+        show(obj) {
+            var base = {
+                val: '未设置值',
+                timeOut: 1000,
+                iconType:''
+            }
+
+            base.val = obj.val || base.val 
+            base.timeOut = obj.timeOut || base.timeOut
+            base.iconType = obj.iconType || base.iconType
+
+            this.value = base.val
+            this.iconType = base.iconType
+            this.flag = true
+
+            setTimeout(() => {
+                this.flag = false
+                this.$apply()
+            }, base.timeOut);
+        }
+    }
+  }
+</script>

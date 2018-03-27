@@ -1,0 +1,160 @@
+<template>
+    <view>
+        <tabss :list="list" bindchange="allchange" height="45" scroll></tabss>
+         <noticebar
+             color="#fff"
+             bgcolor="#aaa" 
+             text="今天的菜好便宜啊~  今天的菜好便宜啊~  今天的菜好便宜啊~  今天的菜好便宜啊~"
+             componentId="haha"
+         ></noticebar>
+        <dialog title="hello" content="可否可以修复呢个bug？" bindcomfirm="cba" bindcancel="cbb" showCancel ></dialog>
+        <repeat for="{{goods}}" key="index" index="index" item="item">
+            <card :info="item"></card>
+        </repeat>   
+        <capsule leftText="1折" rightText="限购一单" type="success"></capsule>
+        <view class="zan-tag">灰色</view>
+        <view class="zan-tag zan-tag--danger">会员折扣</view>
+        <view class="zan-tag zan-tag--warn">返现</view>
+        <view class="zan-tag zan-tag--primary">返现</view>
+        <!-- 不可用样式 -->
+        <view class="zan-tag zan-tag--disabled">不可用</view> 
+        <!-- 镂空 -->
+        <view class="zan-tag zan-tag--warn zan-tag--plain">返现</view>
+        <button class="zan-btn zan-btn--primary" @tap="showLoading">显示Loading组件3秒</button>
+        <button class="zan-btn zan-btn--primary" @tap="showBubble">显示bubble组件</button>
+        <loading ></loading>
+        <bubble></bubble>
+    </view>
+  
+</template>
+<script>
+import wepy from 'wepy'
+import Dialog from '@/components/dialog'
+import Tab from '@/components/tab'
+import NoticeBar from '@/components/noticebar'
+import Card from '@/components/card'
+import Capsule from '@/components/capsule'
+import Bubble from '@/components/bubble'
+import Loading from '@/components/loading'
+export default class Index extends wepy.page {
+  config = {
+      navigationBarTitleText: '组件demo'
+  }
+  
+  data = {
+      list: [
+          {
+              id: 0,
+              title: '全部'
+          },
+          {
+              id: 1,
+              title: '水果'
+          },
+          {
+              id: 2,
+              title: '蔬菜'
+          },
+          {
+              id: 3,
+              title: '肉类'
+          },
+          {
+              id: 4,
+              title: '肉类'
+          },
+          {
+              id: 5,
+              title: '肉类'
+          },
+          {
+              id: 6,
+              title: '肉类'
+          }
+      ],
+      goods: [
+          {
+              imgUrl: 'https://img.yzcdn.cn/upload_files/2016/11/25/FpqPXlrMRjKwJs8VdTu3ZDJCj4j5.jpeg?imageView2/2/w/200/h/200/q/90/format/jpeg',
+              title: '红烧牛肉【虚拟商品】【有库存】【有sku】',
+              price: '¥ 999.99',
+              amountNum: 'x2',
+              status: '已发货',
+              amountStr: '3000克 50%'
+          },
+          {
+              imgUrl: 'https://img.yzcdn.cn/upload_files/2016/11/25/FpqPXlrMRjKwJs8VdTu3ZDJCj4j5.jpeg?imageView2/2/w/200/h/200/q/90/format/jpeg',
+              title: '红烧牛肉【虚拟商品】【有库存】【有sku】',
+              price: '¥ 999.99',
+              amountNum: 'x2',
+              status: '已发货',
+              amountStr: '3000克 50%'
+          },
+          {
+              imgUrl: 'https://img.yzcdn.cn/upload_files/2016/11/25/FpqPXlrMRjKwJs8VdTu3ZDJCj4j5.jpeg?imageView2/2/w/200/h/200/q/90/format/jpeg',
+              title: '红烧牛肉【虚拟商品】【有库存】【有sku】',
+              price: '¥ 999.99',
+              amountNum: 'x2',
+              status: '已发货',
+              amountStr: '3000克 50%'
+          },
+          {
+              imgUrl: 'https://img.yzcdn.cn/upload_files/2016/11/25/FpqPXlrMRjKwJs8VdTu3ZDJCj4j5.jpeg?imageView2/2/w/200/h/200/q/90/format/jpeg',
+              title: '红烧牛肉【虚拟商品】【有库存】【有sku】',
+              price: '¥ 999.99',
+              amountNum: 'x2',
+              status: '已发货',
+              amountStr: '3000克 50%'
+          }
+      ] 
+  }
+
+  components = {
+      dialog: Dialog,
+      tabss: Tab,
+      noticebar: NoticeBar,
+      card: Card,
+      capsule: Capsule,
+      loading: Loading,
+      bubble: Bubble
+  }
+
+  methods = {
+    showLoading(e) {
+      const model = this
+      model.$invoke('loading','show', '加载中')
+      setTimeout(() => {
+        model.$invoke('loading','hide')
+      }, 3000);
+    },
+    showBubble(e) {
+      this.$invoke('bubble','show', {
+          val: '是否可以修复呢个bug？',
+          timeOut: 1500,
+          iconType: 'info'
+      })
+    }
+
+  }
+
+  onReady() {
+     this.$invoke('dialog', 'show')
+     this.$invoke('noticebar', 'init')
+  }
+
+  cba() {
+      console.log('成功之后的回调11')
+  }
+
+  cbb() {
+      console.log('取消之后的回调')
+  }
+
+  allchange(id) {
+      console.log('nice ' + id)
+  }
+}
+</script>
+<style lang="less">
+ @import '../assets/less/tag.less';
+</style>
+

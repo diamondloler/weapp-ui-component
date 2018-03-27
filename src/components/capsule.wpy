@@ -1,0 +1,106 @@
+<template name="capsule">
+  <view class="zan-capsule zan-capsule--{{type}}">
+    <block wx:if="{{color}}">
+      <view
+        class="zan-capsule__left"
+        style="background: {{ color }}; border-color: {{ color }}"
+      >{{ leftText }}</view>
+      <view
+        class="zan-capsule__right"
+        style="color: {{ color }}; border-color: {{ color }}"
+      >{{ rightText }}</view>
+    </block>
+    <block wx:else>
+      <view class="zan-capsule__left">{{ leftText }}</view>
+      <view class="zan-capsule__right">{{ rightText }}</view>
+    </block>
+  </view>
+</template>
+<script>
+    import wepy from 'wepy'
+    export default class Capsule extends wepy.component {
+        props = {
+            //左边文本
+            leftText: {
+                type: String,
+                default: ''
+            },
+            //右边文本
+            rightText: {
+                type: String,
+                default: ''
+            },
+            //自定义颜色风格（字体 背景）
+            color: {
+                type: String,
+                default: ''
+            },
+            //三个类型，primary、danger、success
+            type: {
+                type: String,
+                default: ''
+            },
+        }
+    }
+</script>
+<style lang="less">
+.zan-capsule {
+  display: inline-block;
+  font-size: 12px;
+  vertical-align: middle;
+  line-height: 19px;
+  transform: scale(0.83);
+}
+.zan-capsule__left,
+.zan-capsule__right {
+  display: inline-block;
+  line-height: 17px;
+  height: 19px;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+.zan-capsule__left {
+  padding: 0 2px;
+  color: #fff;
+  background: #999;
+  border-radius: 2px 0 0 2px;
+  border: 1rpx solid #999;
+}
+.zan-capsule__right {
+  padding: 0 5px;
+  color: #999;
+  border-radius: 0 2px 2px 0;
+  border: 1rpx solid #999;
+}
+
+.zan-capsule--danger .zan-capsule__left {
+  color: #fff;
+  background: #f24544;
+  border-color: #f24544;
+}
+
+.zan-capsule--danger .zan-capsule__right {
+  color: #f24544;
+  border-color: #f24544;
+}
+.zan-capsule--primary .zan-capsule__left {
+  color: #fff;
+  background: #38f;
+  border-color: #38f;
+}
+
+.zan-capsule--primary .zan-capsule__right {
+  color: #38f;
+  border-color: #38f;
+}
+.zan-capsule--success .zan-capsule__left {
+  color: #fff;
+  background: #50EA2A;
+  border-color: #50EA2A;
+}
+
+.zan-capsule--success .zan-capsule__right {
+  color: #50EA2A;
+  border-color: #50EA2A;
+}
+</style>
